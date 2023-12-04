@@ -1,0 +1,85 @@
+  ..:: DOCKER COMMANDS ::..
+
+docker run -dit debian # Start container Interative Detached 
+
+docker run debian # Starts container and finhises immediately
+
+docker ps # Get running containers
+
+docker stop beautiful_shirley # Stop container
+
+docker images # See downloaded images
+
+docker inspect b54 # Inspect container
+
+docker --help
+
+docker images --help
+
+docker pull nginx # Donwload image to file system
+
+docker history nginx # See how an image was created
+
+docker images --no-trunc # see entire id from image
+
+docker tag nginx:latest nginx:myblog_stable # Create a new tagged image from already existing image
+
+docker build -t mynginx . # Create image from dockerfile
+
+docker rmi nginx:myblog_stable # Delete image or untag if other tag is attached to same image
+
+docker system df # See how much space docker is eating from file system
+
+docker run -dit --name=web debian # Create container with specific name
+
+docker run -dit --restart=always --name=fourth_container debian # Create container that docker restarts if stops running
+
+docker logs web # See output from a container
+
+docker run --name our_nginx -d -p 8080:80 nginx # 8080 is my local port, 80 is containers port
+
+docker run  -p 8080:80 --name another_nginx -v C:\webpages:/usr/share/nginx/html:ro -d nginx # Share a local folder with a container in ro mode (read only)
+
+docker exec -it 8bac /bin/bash # Open cmd from target container
+
+docker exec -it 8bac sh # Open cmd from target container
+
+exit # Exists from cmd session
+
+docker exec -d execution touch /root/hello # Create a file inside a container without opening a session to it
+
+docker exec -it execution ls /root # Check if a file existis inside a container folder called "root"
+
+docker top execution # See top processes running in container
+
+docker logs -f busylogs # Open logs from container and leave opened
+
+docker logs -f busylogs # Open logs from container and leave opened
+
+docker login
+
+docker build -t gmendesbr/dockerping:latest . # Create image from dockerfile in current directory
+
+docker push gmendesbr/dockerping:latest # Push image to dockerhub
+
+docker run --entrypoint /usr/bin/curl -it gmendesbr/nettools google.com
+
+docker volume create testdata # Create volume
+
+docker volume ls # List volumes 
+
+docker volume rm testdata # Remove volume
+
+docker volume inspect mydata1 # Inspect volume
+
+docker run -d --name withvolume --mount source=mydata1,destination=/root/volume nginx # Create container with specified volume
+
+docker network ls # See all networks we have in docker (Should be at least 3 and the bridge the most useful one)
+
+docker network inspect bridge # inspect what containers are using the bridge network
+
+docker network create blog # Create a new network
+
+docker run --name web --network blog -p 80:80 --mount src=blog_web_data,dst=/var/www/html -dit php:apache # create container specifying volume and network
+
+docker run --name db --network blog -e MYSQL_ROOT_PASSWORD=pw123 -e MYSQL_DATABASE=wordpress --mount src=blog_db_data,dst=/var/lib/mysql -d mariadb # Create a database
